@@ -1,27 +1,59 @@
-const listaPedidos = [];
+import { listaPedidos } from "./datos.js";
+
 let totalAcumulado = 0;
 
 function agregarPedido(cliente, producto, precio) {
+    let preciosArray = [precio];
+    let subtotal = preciosArray.reduce((acumulador, actual) => acumulador + actual, 0);
+
+    let iva = subtotal * 0.16;
+    let precioConIva = subtotal + iva;
+
     let pedido = {
         nombreCliente: cliente,
         nombreProducto: producto,
-        precioProducto: precio
+        precioProducto: precioConIva,
+        subtotalPedido: subtotal,
+        ivaPedido: iva
     };
 
     listaPedidos.push(pedido);
-
-    totalAcumulado = totalAcumulado + precio;
+    totalAcumulado = totalAcumulado + precioConIva;
 
     console.log("¡Pedido agregado con éxito!");
 }
 
-let nom = prompt ("Ingrese el nombre del cliente:");
+export function nuevoPedido(cliente) {
+    let producto = prompt("Nombre del producto:");
+    let precio = parseFloat(prompt("Precio del producto:"));
 
+    agregarPedido(cliente, producto, precio);
 
-agregarPedido(nom, "Café Americano", 40);
+    alert("Pedido guardado");
+}
 
-console.log("--- LISTA DE PEDIDOS ---");
+function listarPedidos() {
+    nuevoPedido("Cliente General");
 
-console.log(listaPedidos);
+    document.write("<h2>Lista de Pedidos - Caja</h2>");
 
-console.log("Total acumulado en caja: $" + totalAcumulado);
+    for (let i = 0; i < listaPedidos.length; i++) {
+        const { nombreCliente, nombreProducto, precioProducto, subtotalPedido, ivaPedido } = listaPedidos[i];
+
+        document.write(
+            "<p><strong>Cliente:</strong> " + nombreCliente + "</p>" +
+            "<p><strong>Producto:</strong> " + nombreProducto + "</p>" +
+            "<p>Subtotal: $" + subtotalPedido.toFixed(2) + "</p>" +
+            "<p>IVA (16%): $" + ivaPedido.toFixed(2) + "</p>" +
+            "<p><strong>Total con IVA:</strong> $" + precioProducto.toFixed(2) + "</p>" +
+            "<hr>"
+        );
+    }
+
+    console.log("--- LISTA DE PEDIDOS ---");
+    console.log(listaPedidos);
+
+    console.log(
+        "Total acumulado en caja: $" + totalAcumulado.toFixed(2)
+    );
+}
