@@ -18,7 +18,7 @@ function agregarPedido(cliente, producto, precio) {
     };
 
     listaPedidos.push(pedido);
-    totalAcumulado = totalAcumulado + precioConIva;
+    totalAcumulado += precioConIva;
 
     console.log("¡Pedido agregado con éxito!");
 }
@@ -37,23 +37,21 @@ function listarPedidos() {
 
     document.write("<h2>Lista de Pedidos - Caja</h2>");
 
-    for (let i = 0; i < listaPedidos.length; i++) {
-        const { nombreCliente, nombreProducto, precioProducto, subtotalPedido, ivaPedido } = listaPedidos[i];
+    for (const pedido of listaPedidos) {
+        const { nombreCliente, nombreProducto, precioProducto, subtotalPedido, ivaPedido } = pedido;
 
         document.write(
-            "<p><strong>Cliente:</strong> " + nombreCliente + "</p>" +
-            "<p><strong>Producto:</strong> " + nombreProducto + "</p>" +
-            "<p>Subtotal: $" + subtotalPedido.toFixed(2) + "</p>" +
-            "<p>IVA (16%): $" + ivaPedido.toFixed(2) + "</p>" +
-            "<p><strong>Total con IVA:</strong> $" + precioProducto.toFixed(2) + "</p>" +
-            "<hr>"
+            `<p><strong>Cliente:</strong> ${nombreCliente}</p>` +
+            `<p><strong>Producto:</strong> ${nombreProducto}</p>` +
+            `<p>Subtotal: $${subtotalPedido.toFixed(2)}</p>` +
+            `<p>IVA (16%): $${ivaPedido.toFixed(2)}</p>` +
+            `<p><strong>Total con IVA:</strong> $${precioProducto.toFixed(2)}</p>` +
+            `<hr>`
         );
     }
 
     console.log("--- LISTA DE PEDIDOS ---");
     console.log(listaPedidos);
 
-    console.log(
-        "Total acumulado en caja: $" + totalAcumulado.toFixed(2)
-    );
+    console.log(`Total acumulado en caja: $${totalAcumulado.toFixed(2)}`);
 }
