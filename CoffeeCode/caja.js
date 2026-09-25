@@ -23,21 +23,31 @@ function agregarPedido(cliente, producto, precio) {
     console.log("¡Pedido agregado con éxito!");
 }
 
-export function nuevoPedido(cliente) {
+export function nuevoPedido(cliente, callbackListo, callbackCancelado) {
     let producto = prompt("Nombre del producto:");
     let precio = parseFloat(prompt("Precio del producto:"));
 
-    if(listaPedidos = [2]){
-        alert("Pedido cancelado")
+    if (!producto || isNaN(precio)) {
+        callbackCancelado(); 
+        return;
     }
-    else{
-        agregarPedido(cliente, producto, precio);
-        alert("Pedido guardado");
-    }
+
+    agregarPedido(cliente, producto, precio);
+    alert("Pedido guardado");
+    
+    callbackListo(); 
 }
 
+const mostrarPedidoListo = () => {
+    console.log("Estado: ¡Pedido listo para entrega!");
+};
+
+const mostrarPedidoCancelado = () => {
+    console.log("Estado: Pedido cancelado.");
+};
+
 function listarPedidos() {
-    nuevoPedido("Cliente General");
+    nuevoPedido("Cliente General", mostrarPedidoListo, mostrarPedidoCancelado);
 
     document.write("<h2>Lista de Pedidos - Caja</h2>");
 
