@@ -27,9 +27,13 @@ export function nuevoPedido(cliente) {
     let producto = prompt("Nombre del producto:");
     let precio = parseFloat(prompt("Precio del producto:"));
 
-    agregarPedido(cliente, producto, precio);
-
-    alert("Pedido guardado");
+    if(listaPedidos = [2]){
+        alert("Pedido cancelado")
+    }
+    else{
+        agregarPedido(cliente, producto, precio);
+        alert("Pedido guardado");
+    }
 }
 
 function listarPedidos() {
