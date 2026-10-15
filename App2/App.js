@@ -14,7 +14,12 @@ export default function App() {
       <Image source={require('./assets/wave.png')}/>
       <Saludo/>
       <Saludo2/>
-      <Perfil/>
+      <Text>=================</Text>
+      <Perfil nombre="Kevin Piña" 
+              carrera="ITIID" 
+              materia="Móvil" 
+              cuatri="4" />
+      <Text>=================</Text>
       <StatusBar style="auto" />
     </View>
   );
