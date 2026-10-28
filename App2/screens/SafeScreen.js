@@ -1,14 +1,17 @@
 // 1. ZONA DE IMPORTACIONES
-import { StyleSheet, View, Text } from 'react-native';
-
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { SafeAreaView  } from 'react-native-safe-area-context';
+import SafeAreaEjemplo from '../components/SafeAreaEjemplo';
+import ScrollViewEjemplo from '../components/ScrollViewEjemplo';
 
 // 2. ZONA MAIN (Componentes ó Screens)
 export default function SafeScreen() {
   return (
-    <View style={styles.container}>
-        <Text>Aquí va la práctica 10</Text>
-        <Text>Equipo Dulce</Text>
-    </View>
+    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
+        <Text>Aquí va la práctica 10 - Equipo Dulce</Text>
+        <SafeAreaEjemplo/>
+        <ScrollViewEjemplo/>
+    </SafeAreaView>
   );
 }
 
