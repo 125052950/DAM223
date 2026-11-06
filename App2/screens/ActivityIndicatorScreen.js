@@ -1,24 +1,96 @@
-// 1. ZONA DE IMPORTACIONES
-import { StyleSheet, View, Text} from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, Button, ActivityIndicator, KeyboardAvoidingView, Platform, Switch, Text, StyleSheet } from 'react-native';
 
+export default function ActivityIndicatorScreen() {
+  const [cargando, setCargando] = useState(false);
+  const [esGrande, setEsGrande] = useState(false);
+  const [cambiarColor, setCambiarColor] = useState(false);
 
-// 2. ZONA MAIN (Componentes ó Screens)
-export default function PressableScreen() {
+  const handleEnviar = () => {
+    setCargando(true);
+    setTimeout(() => setCargando(false), 4000);
+  };
+
   return (
-    <View style={styles.container}>
-        <Text>Aquí va la práctica 16</Text>
-        <Text>Equipo Schoenstatt</Text>
-    </View>
+      <KeyboardAvoidingView 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={20}
+      style={styles.container}
+      >
+      <TextInput 
+        placeholder="Escribe algo..." 
+        style={styles.input} 
+      />
+
+      <View style={styles.actionContainer}>
+        {cargando ? (
+          <ActivityIndicator 
+            size={esGrande ? "large" : "small"} 
+            color={cambiarColor ? "#00bfff" : "#ff00fb"} 
+          />
+        ) : (
+          <Button 
+            title="Enviar" 
+            onPress={handleEnviar} 
+          />
+        )}
+      </View>
+
+      <View style={styles.switchBox}>
+        <View style={styles.switchRow}>
+          <Text style={styles.switchText}>Hacer más grande</Text>
+          <Switch 
+            value={esGrande} 
+            onValueChange={setEsGrande} 
+          />
+        </View>
+
+        <View style={styles.switchRow}>
+          <Text style={styles.switchText}>Cambiar color</Text>
+          <Switch 
+            value={cambiarColor} 
+            onValueChange={setCambiarColor} 
+          />
+        </View>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
-// 3. ZONA DE ESTILOS
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1, 
+    justifyContent: 'flex-end', 
+    padding: 20, 
     backgroundColor: '#fff',
-    flexDirection:'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  input: {
+    borderWidth: 1, 
+    borderColor: '#ccc', 
+    padding: 10, 
+    borderRadius: 8, 
+    marginBottom: 20, 
+    backgroundColor: '#fff',
+  },
+  actionContainer: {
+    height: 40, 
+    justifyContent: 'center', 
+    marginBottom: 20,
+  },
+  switchBox: {
+    borderWidth: 1, 
+    borderColor: '#ddd', 
+    borderRadius: 8, 
+    padding: 15, 
+    backgroundColor: '#fff',
+  },
+  switchRow: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'space-between', 
+    marginBottom: 15,
+  },
+  switchText: {
+    fontSize: 16,
   },
 });
